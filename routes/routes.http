@@ -1,0 +1,19 @@
+POST http://localhost:4080/create
+Content-Type: application/json
+
+{
+    "nome": "Leonardo",
+    "cpf": "123456678",
+    "senha": "123456"
+}
+
+###
+GET http://localhost:4080/login/123456
+
+###
+PUT http://localhost:4080/uptadeKey?search=123456
+
+###
+GET  http://localhost:4080/listPersons
+
+###
