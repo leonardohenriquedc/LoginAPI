@@ -51,9 +51,11 @@ import { randomUUID } from 'node:crypto';
 
     updateData(cpf, senha){
         const obj = this.requestDataBase();
-        const valueCpf = obj.findIndex(pessoa => {
+        console.log(cpf)
+        const objChange = senha;
+        const valueCpf = obj.find(pessoa => {
            pessoa.cpf === cpf
         })
-        console.log(valueCpf)
+        return valueCpf
     }
 }

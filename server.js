@@ -36,10 +36,10 @@ server.get('/listPersons', () =>{
     return (dataBasePost.listContent())
 })
 
-server.put('/uptadeKey/:cpf', (request, response) => {
+server.put('/uptadeKey', (request, response) => {
     const cpf = request.query.search;
     const senha = request.body
-    const value = dataBasePost.update(cpf, senha);
+    const value = dataBasePost.updateData(cpf, senha);
     console.log(value)
 })
 
