@@ -16,8 +16,23 @@ import { randomUUID } from 'node:crypto';
         this.#pessoas.delete(cpf);
     }
 
-    login(cpf){
-       return Array.from(this.#pessoas.entries())
+    validacionlogin(cpf){ 
+        const obj = this.requestDataBase();
+        const valueCpf = obj.find(pessoa => {
+            pessoa.cpf === cpf
+            return true
+        })
+        
+        if(valueCpf){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+
+    requestDataBase(){
+        return Array.from(this.#pessoas.entries())
             .map((pessoaArray) => {
                 const id = pessoaArray[0];
                 const dataPessoa = pessoaArray[1];
@@ -25,20 +40,20 @@ import { randomUUID } from 'node:crypto';
                     id,
                     ...dataPessoa
                 }
+                return objPessoa
             })
-            .filter(objPessoa => {
-                   if(objPessoa.cpf.includes(cpf)){
-                    return true
-                   }
-                   else{
-                    return false
-                   }
-            })
-        
     }
 
     listContent(){
         const pessoas = Array.from(this.#pessoas.entries())
-       return pessoas
+        return pessoas
+    }
+
+    updateData(cpf, senha){
+        const obj = this.requestDataBase();
+        const valueCpf = obj.findIndex(pessoa => {
+           pessoa.cpf === cpf
+        })
+        console.log(valueCpf)
     }
 }
