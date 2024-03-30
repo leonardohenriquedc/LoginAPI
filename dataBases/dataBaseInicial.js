@@ -19,16 +19,15 @@ import { randomUUID } from 'node:crypto';
     validacionlogin(cpf){ 
         const obj = this.requestDataBase();
         const valueCpf = obj.find(pessoa => {
-            pessoa.cpf === cpf
-            return true
+            if(pessoa.cpf === cpf){
+                return true
+            }
+            else{
+                return false
+            }
+            
         })
-        
-        if(valueCpf){
-            return true
-        }
-        else{
-            return false
-        }
+       return valueCpf
     }
 
     requestDataBase(){
@@ -45,17 +44,21 @@ import { randomUUID } from 'node:crypto';
     }
 
     listContent(){
-        const pessoas = Array.from(this.#pessoas.entries())
-        return pessoas
+        const pessoas = Array.from(this.#pessoas.entries());
+        return this.requestDataBase();
+        //return pessoas
     }
 
     updateData(cpf, senha){
         const obj = this.requestDataBase();
-        console.log(cpf)
         const objChange = senha;
         const valueCpf = obj.find(pessoa => {
-           pessoa.cpf === cpf
+           if(pessoa.cpf === cpf){
+                return console.log(pessoa.cpf.findIndex(cpf));
+           }
+           else{
+                return false
+           }
         })
-        return valueCpf
     }
 }

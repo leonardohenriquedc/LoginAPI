@@ -3,12 +3,12 @@ Content-Type: application/json
 
 {
     "nome": "Leonardo",
-    "cpf": "651565",
+    "cpf": "351329898",
     "senha": "123456" 
 }
 
 ###
-GET http://localhost:4070/login/651565
+GET http://localhost:4070/login/351329898
 
 ###
 PUT http://localhost:4070/uptadeKey?search=651565
