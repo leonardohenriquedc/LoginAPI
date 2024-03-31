@@ -1,17 +1,16 @@
 // server.js 
-
 import fastify from 'fastify';
 
-import { DataBasePost } from './dataBases/dataBaseInicial.js';
+import { DataBaseSql } from './dataBases/dataBaseSql.js';
 
 const server = fastify();
 
-const dataBasePost = new DataBasePost;
+const dataBaseSql = new DataBaseSql;
 
 server.post('/create', (request, response) => {
        const {nome, cpf, senha} = request.body;
 
-       dataBasePost.create({
+       dataBaseSql.create({
         nome,
         cpf, 
         senha
@@ -22,7 +21,7 @@ server.post('/create', (request, response) => {
 
 server.get('/login/:cpf', (request, response) => {
     const cpf = request.params.cpf;
-    const loginRes = dataBasePost.validacionlogin(cpf);
+    const loginRes = dataBaseSql.validacionlogin(cpf);
     if(loginRes){
         response.send('Foi encontrado');
     }
@@ -33,13 +32,13 @@ server.get('/login/:cpf', (request, response) => {
 })
 
 server.get('/listPersons', () =>{
-    return (dataBasePost.listContent());
+    return (dataBaseSql.listContent());
 })
 
 server.put('/uptadeKey', (request, response) => {
     const cpf = request.query.search;
     const senha = request.body;
-    const value = dataBasePost.updateData(cpf, senha);
+    const value = dataBaseSql.updateData(cpf, senha);
     console.log(value);
 })
 

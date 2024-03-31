@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^4.26.2"
+    "config": "^3.3.11",
+    "fastify": "^4.26.2",
+    "mysql": "^2.18.1"
   }
 }
