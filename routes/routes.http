@@ -2,13 +2,18 @@ POST http://localhost:4070/create
 Content-Type: application/json
 
 {
-    "nome": "Leonardo",
-    "cpf": "2452585",
-    "senha": "123456" 
+    "nome": "Pedro",
+    "cpf": "9124713",
+    "senha": "154354" 
 }
 
 ###
-GET http://localhost:4070/login/351329898
+GET http://localhost:4070/login
+
+{
+    "cpf": 9124713,
+    "senha": 154354
+}
 
 ###
 PUT http://localhost:4070/uptadeKey?search=2452585

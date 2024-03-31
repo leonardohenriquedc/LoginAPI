@@ -1,22 +1,45 @@
 import { randomUUID } from 'node:crypto';
-import {sql} from '../config/ConnectionSql.js';
+import { sql } from '.././config/ConnectionSql.js';
  
  export class DataBaseSql{
 
-    create(cadPessoa){
-        
+   async create(cadPessoa){
+        const {nome, cpf, senha} = cadPessoa;
+
+        await sql `insert into pessoa (nome, cpf, senha) values (${nome}, ${cpf}, ${senha})`;
+        return 201
     }
 
-    delete(cpf){
-        
-    }
+   async delete(cpf){
+        await sql `delete from pessoa where ${Number(cpf)}`
+   }
 
-    validacionlogin(cpf){ 
-        
-    }
+   validationData(cpf, senha){
+      if(cpf.lenght == 11 && senha != null && senha != ''){
+         return true
+      }
+      else{
+         return false
+      }
+   }
 
-    requestDataBase(){
-        
+   async validacionlogin(cpf, senha){
+      cpf.replace(/[^\w\s]/gi, '');
+      const validado = this.validationData(cpf, senha)
+      if(validado){
+         const login = await sql`SELECT * FROM pessoa WHERE senha =  ${String(senha)} 
+            AND cpf::TEXT = ${String(cpf)}`;
+         if(login != []){
+            return JSON.stringify(login[0]);
+         }
+         else{
+            return 404
+         }
+      }
+   }
+
+   async requestDataBase(){
+      return await sql `select cpf from pessoa`;
     }
 
     listContent(){

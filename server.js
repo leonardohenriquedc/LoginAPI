@@ -2,33 +2,34 @@
 import fastify from 'fastify';
 
 import { DataBaseSql } from './dataBases/dataBaseSql.js';
-
+ 
 const server = fastify();
 
 const dataBaseSql = new DataBaseSql;
 
 server.post('/create', (request, response) => {
        const {nome, cpf, senha} = request.body;
-
-       dataBaseSql.create({
-        nome,
-        cpf, 
-        senha
-       })
-
-       response.status(201).send()
+        try {
+            if(!nome || !cpf || !senha){
+                return response.status(401).send(`Verificar formularios`)
+            }
+            dataBaseSql.create({
+                nome,
+                cpf, 
+                senha
+               })
+            response.status(201).send()
+        }
+        catch (error) {
+            console.log(error);
+            response.status(500).send();
+        }
 })
 
-server.get('/login/:cpf', (request, response) => {
-    const cpf = request.params.cpf;
-    const loginRes = dataBaseSql.validacionlogin(cpf);
-    if(loginRes){
-        response.send('Foi encontrado');
-    }
-    else{
-        response.send('Não foi encontrado');
-    }
-    console.log(typeof(cpf), cpf)
+server.get('/login', async (request, response) => {
+    const {cpf, senha } = request.body
+    const loginRes = await dataBaseSql.validacionlogin(cpf, senha);
+    response.send(loginRes)
 })
 
 server.get('/listPersons', () =>{
@@ -41,7 +42,6 @@ server.put('/uptadeKey', (request, response) => {
     const value = dataBaseSql.updateData(cpf, senha);
     console.log(value);
 })
-
 
 server.listen({
     port: 4070
