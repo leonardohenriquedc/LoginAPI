@@ -26,10 +26,18 @@ server.post('/create', (request, response) => {
         }
 })
 
-server.get('/login', async (request, response) => {
-    const {cpf, senha } = request.body
+server.post('/login', async (request, response) => {
+    const { cpf, senha } = request.body;
+    console.log(cpf, senha)
     const loginRes = await dataBaseSql.validacionlogin(cpf, senha);
-    response.send(loginRes)
+    const conLogin = JSON.parse(loginRes);
+    if(conLogin.cpf === cpf){
+        response.send(conLogin);
+        console.log(typeof(conLogin), conLogin.cpf);
+    }
+    else{
+        response.send('ta tentando fazer oq safado')
+    }
 })
 
 server.get('/listPersons', () =>{

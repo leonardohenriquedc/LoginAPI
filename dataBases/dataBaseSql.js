@@ -6,7 +6,7 @@ import { sql } from '.././config/ConnectionSql.js';
    async create(cadPessoa){
         const {nome, cpf, senha} = cadPessoa;
 
-        await sql `insert into pessoa (nome, cpf, senha) values (${nome}, ${cpf}, ${senha})`;
+        await sql `INSERT INTO pessoa (nome, cpf, senha) VALUES (${String(nome)}, ${Number(cpf)}, ${String(senha)})`;
         return 201
     }
 
@@ -14,36 +14,35 @@ import { sql } from '.././config/ConnectionSql.js';
         await sql `delete from pessoa where ${Number(cpf)}`
    }
 
-   validationData(cpf, senha){
-      if(cpf.lenght == 11 && senha != null && senha != ''){
-         return true
-      }
-      else{
-         return false
-      }
+   async validationData(cpf, senha){
+      //cpf.replace(/[^\w\s]/gi, '');
+      if(cpf.length <= 11 && senha !== null || senha !== ''){
+         return true;
+     } else {
+         return false;
+     }
    }
 
    async validacionlogin(cpf, senha){
-      cpf.replace(/[^\w\s]/gi, '');
-      const validado = this.validationData(cpf, senha)
+     
+      const validado = await this.validationData(cpf, senha);
+      console.log(validado)
       if(validado){
-         const login = await sql`SELECT * FROM pessoa WHERE senha =  ${String(senha)} 
-            AND cpf::TEXT = ${String(cpf)}`;
-         if(login != []){
+         const login = await sql `SELECT * FROM pessoa WHERE senha = ${String(senha)} AND cpf = ${Number(cpf)};`;
+         if(login.length != [] && login.length != undefined && login.length != null){
             return JSON.stringify(login[0]);
          }
          else{
             return 404
          }
       }
+      else{
+         return 'deu merda cria'
+      }
    }
 
-   async requestDataBase(){
-      return await sql `select cpf from pessoa`;
-    }
-
-    listContent(){
-       
+   async listContent(){
+      return await sql `select * from pessoa`;
     }
 
     updateData(cpf, senha){

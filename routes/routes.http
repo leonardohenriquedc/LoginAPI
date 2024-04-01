@@ -2,17 +2,18 @@ POST http://localhost:4070/create
 Content-Type: application/json
 
 {
-    "nome": "Pedro",
-    "cpf": "9124713",
-    "senha": "154354" 
+    "nome": "Cardoso",
+    "cpf": "123478923",
+    "senha": "300341" 
 }
 
 ###
-GET http://localhost:4070/login
+POST http://localhost:4070/login
+Content-Type: application/json
 
 {
-    "cpf": 9124713,
-    "senha": 154354
+    "cpf": 24585,
+    "senha": "123456"
 }
 
 ###
