@@ -47,6 +47,7 @@ server.get('/listPersons', () =>{
 server.put('/uptadeKey', (request, response) => {
     const cpf = request.query.search;
     const senha = request.body;
+    console.log(senha);
     const value = dataBaseSql.updateData(cpf, senha);
     console.log(value);
 })

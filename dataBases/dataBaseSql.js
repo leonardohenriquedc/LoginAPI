@@ -45,7 +45,14 @@ import { sql } from '.././config/ConnectionSql.js';
       return await sql `select * from pessoa`;
     }
 
-    updateData(cpf, senha){
-        
+   async updateData(cpf, senha){
+      const login = await sql `SELECT * FROM pessoa WHERE cpf = ${Number(cpf)};`;
+      if(login != []){
+         const alterInfo = await sql `UPDATE pessoa SET senha = ${String(senha.senha)} WHERE cpf = ${Number(cpf)}`
+         return 200, alterInfo
+      }
+      else{
+         return 404
+      }
     }
  }
