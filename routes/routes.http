@@ -12,8 +12,8 @@ POST http://localhost:4070/login
 Content-Type: application/json
 
 {
-    "cpf": 24585,
-    "senha": "123456"
+    "cpf": 123478923,
+    "senha": "teste123"
 }
 
 ###
