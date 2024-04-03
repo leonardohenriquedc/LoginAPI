@@ -30,7 +30,7 @@ server.post('/create', (request, response) => {
 
 server.post('/login', async (request, response) => {
     const {cpf, senha} = request.body;
-    console.log(`${typeof(Number(cpf))}   ${cpf}`)
+    console.log(`${typeof(Number(cpf))}   ${cpf}  \n ${typeof(String(senha))}   ${senha}` )
 
     const loginRes = await dataBaseSql.validacionlogin(cpf, senha);
 
