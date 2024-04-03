@@ -29,13 +29,14 @@ server.post('/create', (request, response) => {
 })
 
 server.post('/login', async (request, response) => {
-    response.header(Access-Control-Allow-Origin, '*')
+    const {cpf, senha} = request.body;
+    console.log(`${typeof(Number(cpf))}   ${cpf}`)
 
-    const { cpf, senha } = request.body;
-    console.log(cpf, senha)
     const loginRes = await dataBaseSql.validacionlogin(cpf, senha);
+
     const conLogin = JSON.parse(loginRes);
-    if(conLogin.cpf === cpf){
+
+    if(conLogin.cpf === Number(cpf)){
         response.send(JSON.stringify(conLogin));
         console.log(conLogin)
     }
@@ -44,8 +45,10 @@ server.post('/login', async (request, response) => {
     }
 })
 
-server.get('/listPersons', () =>{
-    return (dataBaseSql.listContent());
+server.get('/listPersons', (request, response) =>{
+    const lista = dataBaseSql.listContent()
+    return lista
+    //response.send(lista);
 })
 
 server.put('/uptadeKey', (request, response) => {
@@ -55,6 +58,7 @@ server.put('/uptadeKey', (request, response) => {
     const value = dataBaseSql.updateData(cpf, senha);
     console.log(value);
 })
+//-----------------------------------------------
 
 server.addHook('onRequest', (req, res, done) => {
     // Configuração do cabeçalho CORS para permitir solicitações de qualquer origem

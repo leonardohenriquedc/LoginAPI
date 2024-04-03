@@ -26,7 +26,6 @@ import { sql } from '.././config/ConnectionSql.js';
    async validacionlogin(cpf, senha){
      
       const validado = await this.validationData(cpf, senha);
-      console.log(validado)
       if(validado){
          const login = await sql `SELECT * FROM pessoa WHERE senha = ${String(senha)} AND cpf = ${Number(cpf)};`;
          if(login.length != [] && login.length != undefined && login.length != null){
