@@ -35,9 +35,9 @@ server.post('/login', async (request, response) => {
     const loginRes = await dataBaseSql.validacionlogin(cpf, senha);
 
     const conLogin = JSON.parse(loginRes);
-
+    
     if(conLogin.cpf === Number(cpf)){
-        response.send(JSON.stringify(conLogin));
+        response.send('ok');
         console.log(conLogin)
     }
     else{
@@ -45,10 +45,9 @@ server.post('/login', async (request, response) => {
     }
 })
 
-server.get('/listPersons', (request, response) =>{
-    const lista = dataBaseSql.listContent()
-    return lista
-    //response.send(lista);
+server.get('/listPersons', async (request, response) =>{
+    const lista = await dataBaseSql.listContent();
+    response.send(JSON.stringify(lista))
 })
 
 server.put('/uptadeKey', (request, response) => {
