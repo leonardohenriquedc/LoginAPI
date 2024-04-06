@@ -7,7 +7,7 @@ import { sql } from '.././config/ConnectionSql.js';
         const {nome, cpf, senha} = cadPessoa;
 
         await sql `INSERT INTO pessoa (nome, cpf, senha) VALUES (${String(nome)}, ${Number(cpf)}, ${String(senha)})`;
-        return 201
+        return await sql `SELECT * FROM pessoa WHERE cpf = ${Number(cpf)};`;
     }
 
    async delete(cpf){
@@ -47,8 +47,8 @@ import { sql } from '.././config/ConnectionSql.js';
    async updateData(cpf, senha){
       const login = await sql `SELECT * FROM pessoa WHERE cpf = ${Number(cpf)};`;
       if(login != []){
-         const alterInfo = await sql `UPDATE pessoa SET senha = ${String(senha.senha)} WHERE cpf = ${Number(cpf)}`
-         return 200, alterInfo
+         const alterInfo = await sql `UPDATE pessoa SET senha = ${String(senha)} WHERE cpf = ${Number(cpf)}`;
+         return await sql `SELECT * FROM pessoa WHERE cpf = ${Number(cpf)};`;
       }
       else{
          return 404
