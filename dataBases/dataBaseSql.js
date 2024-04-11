@@ -14,9 +14,10 @@ import { sql } from '.././config/ConnectionSql.js';
         await sql `delete from pessoa where ${Number(cpf)}`
    }
 
-   async validationData(cpf, senha){
-      //cpf.replace(/[^\w\s]/gi, '');
-      if(cpf.length <= 11 && senha !== null || senha !== ''){
+   async validationData(email, senha){
+      const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      if(regex.test(email) && senha !== null || senha !== ''){
          return true;
      } else {
          return false;
@@ -27,7 +28,7 @@ import { sql } from '.././config/ConnectionSql.js';
      
       const validado = await this.validationData(cpf, senha);
       if(validado){
-         const login = await sql `SELECT * FROM pessoa WHERE senha = ${String(senha)} AND cpf = ${Number(cpf)};`;
+         const login = await sql `SELECT * FROM pessoa WHERE senha = ${String(senha)} AND email = ${String(email)};`;
          if(login.length != [] && login.length != undefined && login.length != null){
             return JSON.stringify(login[0]);
          }
@@ -36,7 +37,7 @@ import { sql } from '.././config/ConnectionSql.js';
          }
       }
       else{
-         return 'deu merda cria'
+         return 'DeuRuim'
       }
    }
 

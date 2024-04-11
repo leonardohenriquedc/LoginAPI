@@ -12,7 +12,7 @@ const dataBaseSql = new DataBaseSql;
 server.post('/create', async (request, response) => {
        const {nome, cpf, senha} = request.body;
         try {
-            if(!nome || !cpf || !senha){
+            if(!nome || !cpf || !senha || !email){
                 return response.status(401).send(`Verificar formularios`)
             }
             const value = await dataBaseSql.create({
@@ -29,16 +29,13 @@ server.post('/create', async (request, response) => {
 })
 
 server.post('/login', async (request, response) => {
-    const {cpf, senha} = request.body;
-    console.log(`${typeof(Number(cpf))}   ${cpf}  \n ${typeof(String(senha))}   ${senha}` )
-
-    const loginRes = await dataBaseSql.validacionlogin(cpf, senha);
-
+    const {email, senha} = request.body;
+    const loginRes = await dataBaseSql.validacionlogin(email, senha);
     const conLogin = JSON.parse(loginRes);
     
-    if(conLogin.cpf === Number(cpf)){
-        response.send('ok');
-        console.log(conLogin)
+    if(conLogin.email === String(email)){
+        response.send(JSON.stringify(conLogin));
+        console.log(conLogin);
     }
     else{
         response.send('ta tentando fazer oq safado')

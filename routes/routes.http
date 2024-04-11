@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "nome": "Cardoso",
     "cpf": "123478923",
-    "senha": "300341" 
+    "senha": "300341"
 }
 
 ###
@@ -12,12 +12,12 @@ POST http://localhost:4070/login
 Content-Type: application/json
 
 {
-    "cpf": "123478923",
+    "email": "123478923",
     "senha": "teste123"
 }
 
 ###
-PUT http://localhost:4070/uptadeKey?search=123478923
+PUT http://localhost:4070/uptadeKey?search=12347892
 Content-Type: application/json
 
 {
