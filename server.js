@@ -10,7 +10,7 @@ const server = fastify();
 const dataBaseSql = new DataBaseSql;
 
 server.post('/create', async (request, response) => {
-       const {nome, cpf, senha} = request.body;
+       const {nome, cpf, senha, email} = request.body;
         try {
             if(!nome || !cpf || !senha || !email){
                 return response.status(401).send(`Verificar formularios`)
@@ -18,7 +18,8 @@ server.post('/create', async (request, response) => {
             const value = await dataBaseSql.create({
                 nome,
                 cpf, 
-                senha
+                senha,
+                email
                })
             response.status(201).send(JSON.stringify(value))
         }
@@ -30,7 +31,7 @@ server.post('/create', async (request, response) => {
 
 server.post('/login', async (request, response) => {
     const {email, senha} = request.body;
-    const loginRes = await dataBaseSql.validacionlogin(email, senha);
+    const loginRes = await dataBaseSql.validationlogin(email, senha);
     const conLogin = JSON.parse(loginRes);
     
     if(conLogin.email === String(email)){
@@ -38,7 +39,7 @@ server.post('/login', async (request, response) => {
         console.log(conLogin);
     }
     else{
-        response.send('ta tentando fazer oq safado')
+        response.status(404).send()
     }
 })
 

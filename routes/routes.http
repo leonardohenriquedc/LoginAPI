@@ -2,9 +2,10 @@ POST http://localhost:4070/create
 Content-Type: application/json
 
 {
-    "nome": "Cardoso",
-    "cpf": "123478923",
-    "senha": "300341"
+    "nome": "leonardo",
+    "cpf": "05798081222",
+    "senha": "300341",
+    "email": "leohencosta18@gmail.com"
 }
 
 ###
@@ -12,8 +13,8 @@ POST http://localhost:4070/login
 Content-Type: application/json
 
 {
-    "email": "123478923",
-    "senha": "teste123"
+    "email": "leohencosta18@gmail.com",
+    "senha": "2615"
 }
 
 ###
